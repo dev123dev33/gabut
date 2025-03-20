@@ -2,26 +2,111 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Website Keamanan</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keamanan Web</title>
+  <style>
+    body {
+      background: #282c34;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #3c4048;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #61dafb;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #52c0e8;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>Form Keamanan</h1>
-    <form id="securityForm">
+    <h1>Verifikasi Pengguna</h1>
+    <p>Silakan isi form berikut:</p>
+    <form id="verifyForm">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
-
-      <!-- Field honeypot tersembunyi untuk menangkap bot -->
-      <div class="honeypot">
-        <label for="hp_field">Isi jika Anda robot (kosongkan jika manusia):</label>
-        <input type="text" id="hp_field" name="hp_field">
-      </div>
-
+      
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      
       <button type="submit">Submit</button>
     </form>
     <div id="result"></div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    let startTime = Date.now();
+    let mouseMoved = false;
+    let keyStrokes = 0;
+
+    document.addEventListener('mousemove', function() {
+      mouseMoved = true;
+    });
+
+    document.addEventListener('keydown', function() {
+      keyStrokes++;
+    });
+
+    document.getElementById('verifyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      let endTime = Date.now();
+      let timeTaken = endTime - startTime;
+      let resultDiv = document.getElementById('result');
+
+      if (timeTaken < 3000 || !mouseMoved || keyStrokes < 3) {
+        resultDiv.textContent = "Aksi mencurigakan terdeteksi: kemungkinan bot!";
+        resultDiv.style.color = "red";
+      } else {
+        resultDiv.textContent = "Verifikasi berhasil, Anda adalah manusia.";
+        resultDiv.style.color = "green";
+      }
+    });
+  </script>
 </body>
 </html>
