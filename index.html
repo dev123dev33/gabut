@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Website Keamanan</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Form Keamanan</h1>
+    <form id="securityForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <!-- Field honeypot tersembunyi untuk menangkap bot -->
+      <div class="honeypot">
+        <label for="hp_field">Isi jika Anda robot (kosongkan jika manusia):</label>
+        <input type="text" id="hp_field" name="hp_field">
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
